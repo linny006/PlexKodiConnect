@@ -39,6 +39,7 @@ class FanartThread(backgroundthread.KillableThread):
             utils.ERROR(notify=True)
         finally:
             app.APP.deregister_fanart_thread(self)
+            LOG.info('Closing FanartThread')
 
     def _run_internal(self):
         finished = False
