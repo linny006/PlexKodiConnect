@@ -134,16 +134,7 @@ class ProcessingQueue(Queue.Queue, object):
         self._counter = 0
 
     def _qsize(self):
-        return self._current_queue._qsize() if self._current_queue else 0
-
-    def total_size(self):
-        """
-        Return the approximate total size of all queues (not reliable!)
-        """
-        self.mutex.acquire()
-        n = sum(q._qsize() for q in self._queues) if self._queues else 0
-        self.mutex.release()
-        return n
+        return sum(q._qsize() for q in self._queues) if self._queues else 0
 
     def put(self, item, block=True, timeout=None):
         """Put an item into the queue.
